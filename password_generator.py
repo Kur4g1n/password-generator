@@ -62,14 +62,18 @@ if __name__ == "__main__":
     if "letters" in groups:
         groups_mask |= CharGroup.LETTERS
     if "special" in groups:
-        groups_mask += CharGroup.SPECIAL
+        groups_mask |= CharGroup.SPECIAL
     n_passwords = args.passwords
     if n_passwords == 1:
         print(f"Password: {generate(args.length, groups_mask)}")
     elif n_passwords > 1:
         print(
             "Passwords:\n"
-            f"{"\n".join([f"{i+1} {generate(args.length, groups_mask)}" for i in range(n_passwords)])}"
+            f"{
+                "\n".join(
+                    [f"{i+1} {generate(args.length, groups_mask)}" for i in range(n_passwords)]
+                )
+            }"
         )
     else:
         print("No passwords to generate")
