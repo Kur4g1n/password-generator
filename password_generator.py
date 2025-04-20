@@ -15,5 +15,22 @@ if __name__ == "__main__":
         type=int,
         help="Length of the password to be generated",
     )
+    parser.add_argument(
+        "--passwords",
+        "-p",
+        type=int,
+        help="Number of passwords to generate",
+        required=False,
+        default=1,
+    )
     args = parser.parse_args()
-    print(f"Password: {generate(args.length)}")
+    n_passwords = args.passwords
+    if n_passwords == 1:
+        print(f"Password: {generate(args.length)}")
+    elif n_passwords > 1:
+        print(
+            "Passwords:\n"
+            f"{"\n".join([f"{i+1} {generate(args.length)}" for i in range(n_passwords)])}"
+        )
+    else:
+        print("No passwords to generate")
