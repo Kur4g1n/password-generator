@@ -31,6 +31,14 @@ if __name__ == "__main__":
         help="Length of the password to be generated",
     )
     parser.add_argument(
+        "--passwords",
+        "-p",
+        type=int,
+        help="Number of passwords to generate",
+        required=False,
+        default=1,
+    )
+    parser.add_argument(
         "-c",
         "--characters",
         type=str,
@@ -45,8 +53,16 @@ if __name__ == "__main__":
     groups = list(args.characters.split("+"))
     groups_mask = CharGroup.NONE
     if "digits" in groups:
-        groups_mask += CharGroup.DIGITS
+        groups_mask |= CharGroup.DIGITS
     if "letters" in groups:
-        groups_mask += CharGroup.LETTERS
-
-    print(f"Password: {generate(args.length, groups_mask)}")
+        groups_mask |= CharGroup.LETTERS
+    n_passwords = args.passwords
+    if n_passwords == 1:
+        print(f"Password: {generate(args.length, groups_mask)}")
+    elif n_passwords > 1:
+        print(
+            "Passwords:\n"
+            f"{"\n".join([f"{i+1} {generate(args.length, groups_mask)}" for i in range(n_passwords)])}"
+        )
+    else:
+        print("No passwords to generate")
