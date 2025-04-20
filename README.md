@@ -22,8 +22,14 @@ Generate password of length N:
 python3 password_genenrator.py N
 ```
 
-Generate M passwords of length N:
+Generate M passwords of length N
 
 ```bash
 python3 password_genenrator.py N -p M
+```
+
+Generate password of length N (include letters (a-z) and digits (0-9)):
+
+```bash
+python3 password_genenrator.py N -c letters+digits
 ```
