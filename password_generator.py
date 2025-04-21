@@ -4,7 +4,7 @@ from argparse import ArgumentParser
 
 DIGITS = tuple("1234567890")
 LETTERS = tuple("qwertyuiopasdfghjklzxcvbnm")
-SPECIAL_SYMBOLS = tuple(r"r'.^$*+?{}[]()|\'")
+SPECIAL_SYMBOLS = tuple(r"r.^$*+?{}[]()|\'")
 
 
 class CharGroup(IntFlag):
@@ -18,13 +18,23 @@ def generate(length: int, include_chars: CharGroup) -> str:
     if include_chars == CharGroup.NONE:
         raise ValueError("Need to choose at least one character group")
     available_chars = []
+    n_sets = 0
+    guarantee = []
     if CharGroup.DIGITS & include_chars:
         available_chars += list(DIGITS)
+        guarantee += random.choice(list(DIGITS))
+        n_sets += 1
     if CharGroup.LETTERS & include_chars:
         available_chars += list(LETTERS)
+        guarantee += random.choice(list(LETTERS))
+        n_sets += 1
     if CharGroup.SPECIAL & include_chars:
         available_chars += list(SPECIAL_SYMBOLS)
-    return "".join([random.choice(available_chars) for _ in range(length)])
+        guarantee += random.choice(list(SPECIAL_SYMBOLS))
+        n_sets += 1
+    passwd_symbols = guarantee + [random.choice(available_chars) for _ in range(length - n_sets)]
+    random.shuffle(passwd_symbols)
+    return "".join(passwd_symbols)
 
 
 if __name__ == "__main__":
