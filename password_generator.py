@@ -11,7 +11,7 @@ class CharGroup(IntFlag):
     NONE = 0
     DIGITS = 1 << 0
     LETTERS = 1 << 1
-    SPECIAL = 1 << 3
+    SPECIAL = 1 << 2
 
 
 def generate(length: int, include_chars: CharGroup) -> str:
